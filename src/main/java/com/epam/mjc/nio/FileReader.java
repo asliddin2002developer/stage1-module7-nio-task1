@@ -3,6 +3,7 @@ package com.epam.mjc.nio;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class FileReader {
     public Profile getDataFromFile(File file) {
         String[] cleanedData = new String[4];
         try {
-            Charset charset = Charset.forName("ISO-8859-1");
+            Charset charset = StandardCharsets.ISO_8859_1;
             List<String> lines = Files.readAllLines(file.toPath(), charset);
             int i = 0;
             for (String line : lines) {
@@ -25,9 +26,8 @@ public class FileReader {
                 cleanedData[i] = currentData[1].strip();
                 i++;
             }
-        }
-        catch (IOException e) {
-            e.toString();
+        } catch (IOException e){
+            throw new RuntimeException();
         }
         return new Profile(
                 cleanedData[0],
