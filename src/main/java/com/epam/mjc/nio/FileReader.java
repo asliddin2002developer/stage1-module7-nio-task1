@@ -27,7 +27,6 @@ public class FileReader {
             e.toString();
         }
 
-
         return new Profile(
                 cleanedData[0],
                 Integer.valueOf(cleanedData[1]),
