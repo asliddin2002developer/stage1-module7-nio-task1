@@ -1,34 +1,27 @@
 package com.epam.mjc.nio;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
-
+import java.io.*;
 
 public class FileReader {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         FileReader fileReader = new FileReader();
         File file = new File("src/main/resources/Profile.txt");
         fileReader.getDataFromFile(file);
     }
 
-    public Profile getDataFromFile(File file) {
+    public Profile getDataFromFile(File file) throws IOException {
         String[] cleanedData = new String[4];
-        try {
-            Charset charset = StandardCharsets.ISO_8859_1;
-            List<String> lines = Files.readAllLines(file.toPath(), charset);
-            int i = 0;
-            for (String line : lines) {
-                String[] currentData = line.split(":");
-                cleanedData[i] = currentData[1].strip();
-                i++;
-            }
-        } catch (IOException e){
-            throw new RuntimeException();
+        java.io.FileReader fileReader = new java.io.FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String n;
+        int i = 0;
+        while ((n = bufferedReader.readLine()) != null){
+            String data = n.split(":")[1].strip();
+            cleanedData[i] = data;
+            i++;
         }
+        fileReader.close();
+
         return new Profile(
                 cleanedData[0],
                 Integer.valueOf(cleanedData[1]),
