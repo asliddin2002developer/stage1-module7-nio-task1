@@ -41,12 +41,10 @@ public class FileReader {
             parsedArg[i] = parts[1].trim();
         }
 
-        Profile profile = new Profile(
+        return new Profile(
                 parsedArg[0],
                 Integer.valueOf(parsedArg[1]),
                 parsedArg[2],
                 Long.parseLong(parsedArg[3]));
-        System.out.println(profile);
-        return profile;
     }
 }
