@@ -1,7 +1,6 @@
 package com.epam.mjc.nio;
 
 import java.io.*;
-import java.nio.Buffer;
 
 public class FileReader {
     public static void main(String[] args) {
@@ -12,20 +11,20 @@ public class FileReader {
 
     public Profile getDataFromFile(File file) {
         String[] cleanedData = new String[4];
-        java.io.FileReader fileReader = null;
+        java.io.FileReader fileReader;
         try {
             fileReader = new java.io.FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String n;
             int i = 0;
-            while ((n = bufferedReader.readLine()) != null){
+            while ((n = bufferedReader.readLine()) != null) {
                 String data = n.split(":")[1].strip();
                 cleanedData[i] = data;
                 i++;
             }
-            fileReader.close();
+            bufferedReader.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.toString();
         }
 
 
