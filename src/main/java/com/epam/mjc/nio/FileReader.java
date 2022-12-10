@@ -12,21 +12,31 @@ public class FileReader {
     public Profile getDataFromFile(File file) {
         String[] cleanedData = new String[4];
         java.io.FileReader fileReader;
+        BufferedReader bufferedReader;
+
         try {
             fileReader = new java.io.FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String n;
-            int i = 0;
-            while ((n = bufferedReader.readLine()) != null) {
-                String data = n.split(":")[1].strip();
-                cleanedData[i] = data;
-                i++;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        bufferedReader = new BufferedReader(fileReader);
+        String n;
+        int i = 0;
+        while (true) {
+            try {
+                if ((n = bufferedReader.readLine()) == null) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            String data = n.split(":")[1].strip();
+            cleanedData[i] = data;
+            i++;
+        }
+        try {
             bufferedReader.close();
         } catch (IOException e) {
-            e.toString();
+            throw new RuntimeException(e);
         }
-
         return new Profile(
                 cleanedData[0],
                 Integer.valueOf(cleanedData[1]),
@@ -35,3 +45,4 @@ public class FileReader {
         );
     }
 }
+
